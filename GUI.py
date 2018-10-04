@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-blood=[]
+blood=[False,False,False,False]
 q = 1
 f = 0
 v = 0
@@ -112,7 +112,7 @@ class Login(Frame):
             self.ep.configure(relief=RAISED, fg='green', command=self.start1)
 
     def start2(self):
-        self.start(p1, "Anti B")
+        self.start(p2, "Anti B")
         self.start3()
 
 
@@ -134,10 +134,10 @@ class Login(Frame):
         l.Image = i
         l.place(x=375, y=50)
         if v == 4:
-            self.ep.configure(relief=RAISED, fg='green', command=self.start2)
+            self.ep.configure(relief=RAISED, fg='green', command=self.start1)
 
     def start3(self):
-        self.start(p1, "Anti D")
+        self.start(p3, "Anti D")
         self.start4()
 
 
@@ -158,10 +158,10 @@ class Login(Frame):
         l.Image = i
         l.place(x=675, y=50)
         if v == 4:
-            self.ep.configure(relief=RAISED, fg='green', command=self.start3)
+            self.ep.configure(relief=RAISED, fg='green', command=self.start1)
 
     def start4(self):
-        self.start(p1, "Control")
+        self.start(p4, "Control")
         self.check()
 
     def imagesel4(self):
@@ -181,7 +181,7 @@ class Login(Frame):
         l.Image = i
         l.place(x=975, y=50)
         if v == 4:
-            self.ep.configure(relief=RAISED, fg='green', command=self.start4)
+            self.ep.configure(relief=RAISED, fg='green', command=self.start1)
 
     def process1(self, p,r):  # Extracting the Green plane
         img = cv2.imread(p)
@@ -240,11 +240,12 @@ class Login(Frame):
             ss += (y-mean)**2
         ss /= n
         sd = abs(ss)**0.5
-        print(sd)
-        if sd < 20:
+        print(r,"-",sd,"\n")
+        if sd < 580:
             return 1
         else:
             return 0
+
 
     def start(self, p,r):
         global blood
@@ -254,6 +255,7 @@ class Login(Frame):
         self.process4(r)
         self.process5(r)
         a = self.process7(r)
+        print(a," - ",r)
         if a == 1:
             if r == "Anti A":
                 blood[0]=True
@@ -268,9 +270,9 @@ class Login(Frame):
         if blood[3]==True:
             self.message("Invalid")
         elif blood[0] is False and blood[1] is False and blood[2] is True and blood[3] is False:
-            self.message("O-")
-        elif blood[0] is False and blood[1] is False and blood[2] is False and blood[3] is False:
             self.message("O+")
+        elif blood[0] is False and blood[1] is False and blood[2] is False and blood[3] is False:
+            self.message("O-")
         elif blood[0] is True and blood[1] is False and blood[2] is True and blood[3] is False:
             self.message("A+")
         elif blood[0] is True and blood[1] is False and blood[2] is False and blood[3] is False:
@@ -286,42 +288,62 @@ class Login(Frame):
 
 
     def gp(self):
-        cv2.imshow('Anti-A','p1Anti A.png',0)
-        cv2.imshow('Anti-B','p1Anti B.png', 0)
-        cv2.imshow('Anti-D','p1Anti D.png', 0)
-        cv2.imshow('Control','p1Control.png', 0)
+        im1 = cv2.imread('p1Anti A.png')
+        cv2.imshow('Anti-A',im1)
+        im2 = cv2.imread('p1Anti B.png')
+        cv2.imshow('Anti-B', im2)
+        im3 = cv2.imread('p1Anti D.png')
+        cv2.imshow('Anti-D', im3)
+        im4 = cv2.imread('p1Control.png')
+        cv2.imshow('Control', im4)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def autothresh(self):
-        cv2.imshow('Anti-A', 'p2Anti A.png', 0)
-        cv2.imshow('Anti-B', 'p2Anti B.png', 0)
-        cv2.imshow('Anti-D', 'p2Anti D.png', 0)
-        cv2.imshow('Control', 'p2Control.png', 0)
+        im1 = cv2.imread('p2Anti A.png')
+        cv2.imshow('Anti-A', im1)
+        im2 = cv2.imread('p2Anti B.png')
+        cv2.imshow('Anti-B', im2)
+        im3 = cv2.imread('p2Anti D.png')
+        cv2.imshow('Anti-D', im3)
+        im4 = cv2.imread('p2Control.png')
+        cv2.imshow('Control', im4)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def Adapthresh(self):
-        cv2.imshow('Anti-A', 'p3Anti A.png', 0)
-        cv2.imshow('Anti-B', 'p3Anti B.png', 0)
-        cv2.imshow('Anti-D', 'p3Anti D.png', 0)
-        cv2.imshow('Control', 'p3Control.png', 0)
+        im1 = cv2.imread('p3Anti A.png')
+        cv2.imshow('Anti-A', im1)
+        im2 = cv2.imread('p3Anti B.png')
+        cv2.imshow('Anti-B', im2)
+        im3 = cv2.imread('p3Anti D.png')
+        cv2.imshow('Anti-D', im3)
+        im4 = cv2.imread('p3Control.png')
+        cv2.imshow('Control', im4)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def Fill_holes(self):
-        cv2.imshow('Anti-A', 'p4Anti A.png', 0)
-        cv2.imshow('Anti-B', 'p4Anti B.png', 0)
-        cv2.imshow('Anti-D', 'p4Anti D.png', 0)
-        cv2.imshow('Control', 'p4Control.png', 0)
+        im1 = cv2.imread('p4Anti A.png')
+        cv2.imshow('Anti-A', im1)
+        im2 = cv2.imread('p4Anti B.png')
+        cv2.imshow('Anti-B', im2)
+        im3 = cv2.imread('p4Anti D.png')
+        cv2.imshow('Anti-D', im3)
+        im4 = cv2.imread('p4Control.png')
+        cv2.imshow('Control', im4)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def Remove_small_objects(self):
-        cv2.imshow('Anti-A', 'p5Anti A.png', 0)
-        cv2.imshow('Anti-B', 'p5Anti B.png', 0)
-        cv2.imshow('Anti-D', 'p5Anti D.png', 0)
-        cv2.imshow('Control', 'p5Control.png', 0)
+        im1 = cv2.imread('p5Anti A.png')
+        cv2.imshow('Anti-A', im1)
+        im2 = cv2.imread('p5Anti B.png')
+        cv2.imshow('Anti-B', im2)
+        im3 = cv2.imread('p5Anti D.png')
+        cv2.imshow('Anti-D', im3)
+        im4 = cv2.imread('p5Control.png')
+        cv2.imshow('Control', im4)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
