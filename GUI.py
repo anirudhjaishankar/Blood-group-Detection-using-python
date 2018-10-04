@@ -28,7 +28,7 @@ class Login(Frame):
         self.configure(background='powder blue')
         self.pack(fill=BOTH, expand=1)
         self.master.title("Blood Group Detection System")
-        self.master.iconbitmap('E:\Blood group\gui\Blood.ico')
+        self.master.iconbitmap('D:\Blood-group-Detection-using-python\Blood.ico')
 
         # Code segment for dropdown menu
 
